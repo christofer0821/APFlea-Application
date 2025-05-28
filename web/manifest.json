@@ -1,6 +1,6 @@
 {
-    "name": "appflea_marketplace",
-    "short_name": "appflea_marketplace",
+    "name": "mobile_apflea",
+    "short_name": "mobile_apflea",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

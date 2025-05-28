@@ -1,21 +1,40 @@
 {
   "project_info": {
-    "project_number": "929156500090",
-    "project_id": "apflea-d9662",
-    "storage_bucket": "apflea-d9662.firebasestorage.app"
+    "project_number": "638605254287",
+    "project_id": "apflea-apss",
+    "storage_bucket": "apflea-apss.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:929156500090:android:e951c213071fa1207b09c3",
+        "mobilesdk_app_id": "1:638605254287:android:422d255c2a08583e601afa",
         "android_client_info": {
-          "package_name": "com.example.appflea_marketplace"
+          "package_name": "com.example.apflea_mae_applications"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBSm1BfCSX-E4eE1VZglAK29s_e-p942LE"
+          "current_key": "AIzaSyBsO_Ys5V4Qmb1RZ4cstNa_V4pu1CRhsA8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:638605254287:android:004079018f66b0dc601afa",
+        "android_client_info": {
+          "package_name": "com.example.mobile_apflea"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsO_Ys5V4Qmb1RZ4cstNa_V4pu1CRhsA8"
         }
       ],
       "services": {

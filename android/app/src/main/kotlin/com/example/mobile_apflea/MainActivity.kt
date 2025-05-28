@@ -1,4 +1,4 @@
-package com.example.appflea_marketplace
+package com.example.mobile_apflea
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -41,48 +41,48 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCIyf7Cj0c6thMxtiVxsl-s1OHkL5GOBOg',
-    appId: '1:929156500090:web:bfaf0597ce22ec137b09c3',
-    messagingSenderId: '929156500090',
-    projectId: 'apflea-d9662',
-    authDomain: 'apflea-d9662.firebaseapp.com',
-    storageBucket: 'apflea-d9662.firebasestorage.app',
-    measurementId: 'G-VS78VQFZWQ',
+    apiKey: 'AIzaSyC9peyZsB8n5RaCqTfJIGSHE5anlVL5HKA',
+    appId: '1:638605254287:web:0536ab1de1beff74601afa',
+    messagingSenderId: '638605254287',
+    projectId: 'apflea-apss',
+    authDomain: 'apflea-apss.firebaseapp.com',
+    storageBucket: 'apflea-apss.firebasestorage.app',
+    measurementId: 'G-HFTKK1S4N3',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBSm1BfCSX-E4eE1VZglAK29s_e-p942LE',
-    appId: '1:929156500090:android:e951c213071fa1207b09c3',
-    messagingSenderId: '929156500090',
-    projectId: 'apflea-d9662',
-    storageBucket: 'apflea-d9662.firebasestorage.app',
+    apiKey: 'AIzaSyBsO_Ys5V4Qmb1RZ4cstNa_V4pu1CRhsA8',
+    appId: '1:638605254287:android:004079018f66b0dc601afa',
+    messagingSenderId: '638605254287',
+    projectId: 'apflea-apss',
+    storageBucket: 'apflea-apss.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBgBB8WapviN1s5Xlu6TS3AoGvZ0vUHEGc',
-    appId: '1:929156500090:ios:c3b1a485dcd74d2b7b09c3',
-    messagingSenderId: '929156500090',
-    projectId: 'apflea-d9662',
-    storageBucket: 'apflea-d9662.firebasestorage.app',
-    iosBundleId: 'com.example.appfleaMarketplace',
+    apiKey: 'AIzaSyAFZYU2tkUEKMRJA2yklAqVKTZt_K7VYbQ',
+    appId: '1:638605254287:ios:59410b6064dd81c6601afa',
+    messagingSenderId: '638605254287',
+    projectId: 'apflea-apss',
+    storageBucket: 'apflea-apss.firebasestorage.app',
+    iosBundleId: 'com.example.mobileApflea',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBgBB8WapviN1s5Xlu6TS3AoGvZ0vUHEGc',
-    appId: '1:929156500090:ios:c3b1a485dcd74d2b7b09c3',
-    messagingSenderId: '929156500090',
-    projectId: 'apflea-d9662',
-    storageBucket: 'apflea-d9662.firebasestorage.app',
-    iosBundleId: 'com.example.appfleaMarketplace',
+    apiKey: 'AIzaSyAFZYU2tkUEKMRJA2yklAqVKTZt_K7VYbQ',
+    appId: '1:638605254287:ios:59410b6064dd81c6601afa',
+    messagingSenderId: '638605254287',
+    projectId: 'apflea-apss',
+    storageBucket: 'apflea-apss.firebasestorage.app',
+    iosBundleId: 'com.example.mobileApflea',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyCIyf7Cj0c6thMxtiVxsl-s1OHkL5GOBOg',
-    appId: '1:929156500090:web:e8eb1ed2ca758b517b09c3',
-    messagingSenderId: '929156500090',
-    projectId: 'apflea-d9662',
-    authDomain: 'apflea-d9662.firebaseapp.com',
-    storageBucket: 'apflea-d9662.firebasestorage.app',
-    measurementId: 'G-LN6XQ5DQ6J',
+    apiKey: 'AIzaSyC9peyZsB8n5RaCqTfJIGSHE5anlVL5HKA',
+    appId: '1:638605254287:web:6571d7f33468465d601afa',
+    messagingSenderId: '638605254287',
+    projectId: 'apflea-apss',
+    authDomain: 'apflea-apss.firebaseapp.com',
+    storageBucket: 'apflea-apss.firebasestorage.app',
+    measurementId: 'G-KWT9EZZKL3',
   );
 }
