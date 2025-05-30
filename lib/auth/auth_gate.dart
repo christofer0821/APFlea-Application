@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../screens/buyer/buyer_home.dart';
-import '../screens/seller/seller_home.dart';
+import '../screens/buyer/buyer_main.dart';
+import '../screens/seller/seller_main.dart';
 import '../screens/admin/admin_dashboard.dart';
 import 'login_page.dart';
 
@@ -40,9 +40,9 @@ class AuthGate extends StatelessWidget {
             final role = userData['role'];
 
             if (role == 'buyer') {
-              return const BuyerHomePage();
+              return const BuyerMainPage();
             } else if (role == 'seller') {
-              return const SellerHomePage();
+              return const SellerMainPage();
             } else if (role == 'admin') {
               return const AdminDashboard();
             } else {
