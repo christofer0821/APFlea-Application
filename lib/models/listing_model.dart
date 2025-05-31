@@ -10,8 +10,9 @@ class ListingModel {
   final String sellerId;
   final DateTime createdAt;
   final bool isSold;
-  final String locationState;  // ✅ split field
-  final String locationCity;   // ✅ split field
+  final String locationState;
+  final String locationCity;
+  final String category; // ✅ NEW FIELD
 
   ListingModel({
     required this.id,
@@ -26,6 +27,7 @@ class ListingModel {
     required this.createdAt,
     required this.locationState,
     required this.locationCity,
+    required this.category, // ✅ NEW FIELD
     this.isSold = false,
   });
 
@@ -42,6 +44,7 @@ class ListingModel {
       'createdAt': createdAt.toIso8601String(),
       'locationState': locationState,
       'locationCity': locationCity,
+      'category': category, // ✅ NEW FIELD
       'isSold': isSold,
     };
   }
@@ -60,6 +63,7 @@ class ListingModel {
       createdAt: DateTime.parse(map['createdAt']),
       locationState: map['locationState'] ?? '',
       locationCity: map['locationCity'] ?? '',
+      category: map['category'] ?? 'Others', // ✅ Default fallback
       isSold: map['isSold'] ?? false,
     );
   }

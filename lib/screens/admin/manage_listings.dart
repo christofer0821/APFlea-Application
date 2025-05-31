@@ -50,8 +50,14 @@ class ManageListingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final backgroundColor = const Color(0xFFF5F5F7);
     return Scaffold(
-      appBar: AppBar(title: const Text("Pending Listings")),
+      backgroundColor: backgroundColor,
+      appBar: AppBar(
+        backgroundColor: backgroundColor,
+        elevation: 0,
+        toolbarHeight: 0,
+      ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('listings')
@@ -69,35 +75,85 @@ class ManageListingsPage extends StatelessWidget {
           final docs = snapshot.data!.docs;
 
           return ListView.builder(
+            padding: const EdgeInsets.all(16),
             itemCount: docs.length,
             itemBuilder: (context, index) {
               final doc = docs[index];
               final data = doc.data() as Map<String, dynamic>;
 
               return Card(
-                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: ListTile(
-                  leading: data['imageUrl'] != null
-                      ? Image.network(data['imageUrl'], width: 60, height: 60, fit: BoxFit.cover)
-                      : const Icon(Icons.image_not_supported),
-                  title: Text(data['title'] ?? 'No Title'),
-                  subtitle: Column(
+                elevation: 3,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                margin: const EdgeInsets.only(bottom: 16),
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("RM ${data['price']} • ${data['quantity']} pcs"),
-                      Text("${data['locationCity']}, ${data['locationState']}"),
-                      Text("Seller ID: ${data['sellerId']}"),
-                    ],
-                  ),
-                  trailing: Column(
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.check_circle, color: Colors.green),
-                        onPressed: () => _approveListing(doc.id, context),
+                      Row(
+                        children: [
+                          data['imageUrl'] != null
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: Image.network(
+                                    data['imageUrl'],
+                                    width: 70,
+                                    height: 70,
+                                    fit: BoxFit.cover,
+                                  ),
+                                )
+                              : Container(
+                                  width: 70,
+                                  height: 70,
+                                  color: Colors.grey.shade300,
+                                  child: const Icon(Icons.image_not_supported, size: 30),
+                                ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(data['title'] ?? 'No Title',
+                                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                                const SizedBox(height: 4),
+                                Text("RM ${data['price']} • ${data['quantity']} pcs"),
+                                Text("${data['locationCity']}, ${data['locationState']}",
+                                    style: const TextStyle(color: Colors.grey)),
+                                Text("Seller ID: ${data['sellerId']}",
+                                    style: const TextStyle(fontSize: 12, color: Colors.grey)),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                      IconButton(
-                        icon: const Icon(Icons.cancel, color: Colors.red),
-                        onPressed: () => _rejectListing(doc.id, context),
+                      const SizedBox(height: 12),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          ElevatedButton.icon(
+                            onPressed: () => _approveListing(doc.id, context),
+                            icon: const Icon(Icons.check, size: 16),
+                            label: const Text("Approve", style: TextStyle(fontWeight: FontWeight.bold)),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.green,
+                              foregroundColor: Colors.white,
+                              side: const BorderSide(width: 2.5, color: Colors.green),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          ElevatedButton.icon(
+                            onPressed: () => _rejectListing(doc.id, context),
+                            icon: const Icon(Icons.close, size: 16),
+                            label: const Text("Reject", style: TextStyle(fontWeight: FontWeight.bold)),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red,
+                              foregroundColor: Colors.white,
+                              side: const BorderSide(width: 2.5, color: Colors.red),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

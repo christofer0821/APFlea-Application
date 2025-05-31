@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../screens/buyer/buyer_main.dart';
 import '../screens/seller/seller_main.dart';
-import '../screens/admin/admin_dashboard.dart';
+import '../screens/admin/admin_home.dart';
 import 'login_page.dart';
 
 class AuthGate extends StatelessWidget {
@@ -44,7 +44,7 @@ class AuthGate extends StatelessWidget {
             } else if (role == 'seller') {
               return const SellerMainPage();
             } else if (role == 'admin') {
-              return const AdminDashboard();
+              return const AdminHomePage();
             } else {
               return const Scaffold(body: Center(child: Text("Unknown role.")));
             }

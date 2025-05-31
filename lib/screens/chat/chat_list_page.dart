@@ -12,6 +12,10 @@ class ChatListPage extends StatelessWidget {
   final String currentUserId = FirebaseAuth.instance.currentUser!.uid;
   final ChatService _chatService = ChatService();
 
+  final Color backgroundColor = const Color(0xFFF5F5F7);
+  final Color textColor = const Color(0xFF333333);
+  final Color accentColor = const Color(0xFF2D8CFF);
+
   Future<String> _getOtherUserName(List<String> participants) async {
     final otherUserId = participants.firstWhere((id) => id != currentUserId);
     final doc = await FirebaseFirestore.instance.collection('users').doc(otherUserId).get();
@@ -23,29 +27,46 @@ class ChatListPage extends StatelessWidget {
     final buyerId = chat.participants.first;
     final sellerId = chat.participants.last;
 
-    return ListTile(
-      leading: CircleAvatar(child: Text(otherUserName[0])),
-      title: Text(otherUserName),
-      subtitle: Text(chat.lastMessage),
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => ChatPage(
-              chatId: chat.id,
-              buyerId: buyerId,
-              sellerId: sellerId,
-            ),
+    return Card(
+      color: Colors.white,
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: ListTile(
+        leading: CircleAvatar(
+          backgroundColor: accentColor.withOpacity(0.2),
+          child: Text(
+            otherUserName[0].toUpperCase(),
+            style: TextStyle(color: accentColor, fontWeight: FontWeight.bold),
           ),
-        );
-      },
+        ),
+        title: Text(otherUserName, style: TextStyle(color: textColor, fontWeight: FontWeight.bold)),
+        subtitle: Text(chat.lastMessage, style: TextStyle(color: textColor.withOpacity(0.7))),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => ChatPage(
+                chatId: chat.id,
+                buyerId: buyerId,
+                sellerId: sellerId,
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Chats')),
+      backgroundColor: backgroundColor,
+      appBar: AppBar(
+        backgroundColor: backgroundColor,
+        elevation: 0,
+        automaticallyImplyLeading: false,
+        toolbarHeight: 0, // hide title bar
+      ),
       body: StreamBuilder<QuerySnapshot>(
         stream: _chatService.getUserChats(currentUserId),
         builder: (context, snapshot) {
@@ -53,7 +74,11 @@ class ChatListPage extends StatelessWidget {
 
           final chats = snapshot.data!.docs.map((doc) => ChatModel.fromFirestore(doc)).toList();
 
-          if (chats.isEmpty) return const Center(child: Text("No chats yet"));
+          if (chats.isEmpty) {
+            return Center(
+              child: Text("No chats yet", style: TextStyle(color: textColor)),
+            );
+          }
 
           return ListView.builder(
             itemCount: chats.length,
