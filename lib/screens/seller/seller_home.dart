@@ -28,6 +28,11 @@ class SellerHomePage extends StatelessWidget {
     await FirebaseFirestore.instance.collection('purchase_requests').doc(requestId).update({'status': 'rejected'});
   }
 
+  Future<Map<String, dynamic>?> fetchListing(String listingId) async {
+    final doc = await FirebaseFirestore.instance.collection('listings').doc(listingId).get();
+    return doc.data();
+  }
+
   @override
   Widget build(BuildContext context) {
     final sellerId = FirebaseAuth.instance.currentUser?.uid;
@@ -43,11 +48,9 @@ class SellerHomePage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
           child: ListView(
             children: [
-              Text("Seller Dashboard", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: textColor)),
-              const SizedBox(height: 24),
-
+              
               // 📢 ANNOUNCEMENTS
-              Text("📢 Announcements", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: textColor)),
+              Text("📢 Announcements", style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: textColor)),
               const SizedBox(height: 8),
               StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance
@@ -79,7 +82,7 @@ class SellerHomePage extends StatelessWidget {
               const SizedBox(height: 32),
 
               // 📨 PURCHASE REQUESTS
-              Text("🛒 Purchase Requests", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: textColor)),
+              Text("🛒 Purchase Requests", style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: textColor)),
               const SizedBox(height: 8),
               StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance
@@ -97,26 +100,69 @@ class SellerHomePage extends StatelessWidget {
                   return Column(
                     children: requests.map((doc) {
                       final data = doc.data() as Map<String, dynamic>;
-                      return Card(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                        elevation: 1,
-                        child: ListTile(
-                          title: Text("Listing: ${data['listingTitle'] ?? 'Unknown'}"),
-                          subtitle: Text("Buyer ID: ${data['buyerId']}"),
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              IconButton(
-                                icon: Icon(Icons.check_circle, color: highlightColor),
-                                onPressed: () => approveRequest(doc.id, data['listingId']),
+                      return FutureBuilder<Map<String, dynamic>?>(
+                        future: fetchListing(data['listingId']),
+                        builder: (context, listingSnapshot) {
+                          if (!listingSnapshot.hasData) {
+                            return const SizedBox();
+                          }
+
+                          final listing = listingSnapshot.data!;
+                          return Card(
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                            elevation: 1,
+                            child: Padding(
+                              padding: const EdgeInsets.all(12),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      listing['imageUrl'] != null
+                                          ? Image.network(listing['imageUrl'], width: 60, height: 60, fit: BoxFit.cover)
+                                          : const Icon(Icons.image, size: 60),
+                                      const SizedBox(width: 12),
+                                      Expanded(
+                                        child: Text(
+                                          listing['title'] ?? 'No Title',
+                                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text("Buyer ID: ${data['buyerId']}", style: const TextStyle(fontSize: 12)),
+                                  Text("Price: RM ${listing['price']}", style: const TextStyle(fontSize: 12)),
+                                  Text("Qty: ${listing['quantity']}", style: const TextStyle(fontSize: 12)),
+                                  Text("Location: ${listing['locationCity']}, ${listing['locationState']}", style: const TextStyle(fontSize: 12)),
+                                  const SizedBox(height: 12),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: highlightColor,
+                                          foregroundColor: Colors.white,
+                                        ),
+                                        onPressed: () => approveRequest(doc.id, data['listingId']),
+                                        child: const Text("Approve"),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.red,
+                                          foregroundColor: Colors.white,
+                                        ),
+                                        onPressed: () => rejectRequest(doc.id),
+                                        child: const Text("Reject"),
+                                      ),
+                                    ],
+                                  )
+                                ],
                               ),
-                              IconButton(
-                                icon: const Icon(Icons.cancel, color: Colors.red),
-                                onPressed: () => rejectRequest(doc.id),
-                              ),
-                            ],
-                          ),
-                        ),
+                            ),
+                          );
+                        },
                       );
                     }).toList(),
                   );

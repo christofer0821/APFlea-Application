@@ -40,32 +40,32 @@ class _ChatPageState extends State<ChatPage> {
         margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: isMe ? Colors.blueAccent : Colors.grey[300],
-          borderRadius: BorderRadius.circular(10),
+          color: isMe ? Color(0xFF2D8CFF) : Colors.grey[300],
+          borderRadius: BorderRadius.only(
+            topLeft: const Radius.circular(12),
+            topRight: const Radius.circular(12),
+            bottomLeft: isMe ? const Radius.circular(12) : Radius.zero,
+            bottomRight: isMe ? Radius.zero : const Radius.circular(12),
+          ),
         ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Column(
+          crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
           children: [
-            CircleAvatar(
-              radius: 14,
-              backgroundColor: isMe ? Colors.white : Colors.black12,
-              child: Text(name[0]),
+            Text(
+              name,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: isMe ? Colors.white70 : Colors.black87,
+              ),
             ),
-            const SizedBox(width: 8),
-            Column(
-              crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-              children: [
-                Text(
-                  name,
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  message.text,
-                  style: TextStyle(color: isMe ? Colors.white : Colors.black),
-                ),
-              ],
+            const SizedBox(height: 4),
+            Text(
+              message.text,
+              style: TextStyle(
+                color: isMe ? Colors.white : Colors.black87,
+                fontSize: 16,
+              ),
             ),
           ],
         ),
@@ -88,8 +88,15 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
+    const backgroundColor = Color(0xFFF5F5F7);
+
     return Scaffold(
-      appBar: AppBar(title: const Text("Chat")),
+      backgroundColor: backgroundColor,
+      appBar: AppBar(
+        title: const Text("Chat"),
+        backgroundColor: Color(0xFF2D8CFF),
+        foregroundColor: Colors.white,
+      ),
       body: Column(
         children: [
           Expanded(
@@ -103,6 +110,7 @@ class _ChatPageState extends State<ChatPage> {
                     .toList();
 
                 return ListView.builder(
+                  padding: const EdgeInsets.only(top: 12, bottom: 12),
                   reverse: false,
                   itemCount: messages.length,
                   itemBuilder: (context, index) {
@@ -121,23 +129,30 @@ class _ChatPageState extends State<ChatPage> {
           const Divider(height: 1),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            color: Colors.white,
             child: Row(
               children: [
                 Expanded(
                   child: TextField(
                     controller: _messageController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       hintText: "Type a message...",
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 12),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(color: Colors.grey),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                     ),
                   ),
                 ),
                 const SizedBox(width: 8),
-                IconButton(
-                  icon: const Icon(Icons.send),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                    backgroundColor: Color(0xFF2D8CFF),
+                  ),
                   onPressed: _sendMessage,
-                  color: Colors.deepPurple,
+                  child: const Icon(Icons.send, color: Colors.white),
                 ),
               ],
             ),
