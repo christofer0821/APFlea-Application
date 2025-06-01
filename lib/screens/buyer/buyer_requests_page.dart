@@ -30,8 +30,8 @@ class BuyerRequestsPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: backgroundColor,
         elevation: 0,
-        automaticallyImplyLeading: false, // No back button
-        toolbarHeight: 0, // Hides the AppBar entirely
+        automaticallyImplyLeading: false, 
+        toolbarHeight: 0, 
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance

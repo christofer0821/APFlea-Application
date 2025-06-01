@@ -1,6 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -78,14 +78,18 @@ class _SignUpPageState extends State<SignUpPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Center(
-                child: Text("Create Account",
+                child: Text(
+                  "Create Account",
                   style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: textColor),
                 ),
               ),
               const SizedBox(height: 32),
-              _buildTextField(label: "Full Name", controller: nameController, validatorMsg: "Enter your name"),
-              _buildTextField(label: "Phone Number", controller: phoneController, validatorMsg: "Enter your phone number"),
-              _buildTextField(label: "Email", controller: emailController, validatorMsg: "Enter your email"),
+              _buildTextField(
+                  label: "Full Name", controller: nameController, validatorMsg: "Please enter your name"),
+              _buildTextField(
+                  label: "Phone Number", controller: phoneController, validatorMsg: "Please enter your phone number"),
+              _buildTextField(
+                  label: "Email", controller: emailController, validatorMsg: "Please enter your email"),
               _buildPasswordField(),
               const SizedBox(height: 16),
               DropdownButtonFormField<String>(
@@ -145,7 +149,12 @@ class _SignUpPageState extends State<SignUpPage> {
           filled: true,
           fillColor: Colors.white,
         ),
-        validator: (value) => value!.isEmpty ? validatorMsg : null,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return validatorMsg; // Validation message if the field is empty
+          }
+          return null;
+        },
       ),
     );
   }
@@ -168,7 +177,14 @@ class _SignUpPageState extends State<SignUpPage> {
             onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
           ),
         ),
-        validator: (value) => value!.length < 6 ? "Password must be at least 6 characters" : null,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return "Please enter a password";
+          } else if (value.length < 6) {
+            return "Password must be at least 6 characters long";
+          }
+          return null;
+        },
       ),
     );
   }
